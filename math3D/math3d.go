@@ -43,3 +43,18 @@ const (
 	PiOver180 = Pi / 180
 	InvPiOver180 = 1 / PiOver180
 )
+
+// Defined as macros in m3d.h, should probably convert to
+// 	somthing similar once funtionality is added in the 
+//  meantime i'll make iteasy for the compiler to smooch 
+//  things together
+
+func DegToRad(x float32) float32 { return x * PiOver180 }
+func RadToDeg(x float32) float32 { return x * InvPiOver180 }
+
+func HrToDeg(x float32)  float32 { return x * (1.0 / 15.0) }
+func HrToRad(x float32)  float32 { return x * (1.0 / 15.0) * PiOver180 }
+
+func DegToHr(x float32)  float32 { return x * 15.0 }
+func RadtoHr(x float32)  float32 { return x * 15 * InvPiOver180 }
+
