@@ -3,6 +3,7 @@
 package math3D
 
 import (
+	"math"
 )
 
 type (
@@ -36,4 +37,9 @@ type (
 
 )
 
-
+const (
+	Pi = math.Pi
+	TwoPi = Pi * 2
+	PiOver180 = Pi / 180
+	InvPiOver180 = 1 / PiOver180
+)
