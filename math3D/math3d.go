@@ -131,4 +131,25 @@ func (v *Vector3d) Load(x,y,z float64) { v[0] = x; v[1] = y; v[2] = z }
 func (v *Vector4f) Load(x,y,z,w float32) { v[0] = x; v[1] = y; v[2] = z; v[3] = w }
 func (v *Vector4d) Load(x,y,z,w float64) { v[0] = x; v[1] = y; v[2] = z; v[3] = w }
 
+// functions to init new vectors
+
+func AllocV2f() *Vector2f { return new(Vector2f) }
+func AllocV2d() *Vector2d { return new(Vector2d) }
+
+func AllocV3f() *Vector3f { return new(Vector3f) }
+func AllocV3d() *Vector3d { return new(Vector3d) }
+
+func AllocV4f() *Vector4f { return new(Vector4f) }
+func AllocV4d() *Vector4d { return new(Vector4d) }
+
+// functions to alloc fill and return new vectors
+
+func NewV2f(x,y float32) Vector2f { return [2]float32{x,y} }
+func NewV2d(x,y float64) Vector2d { return [2]float64{x,y} }
+
+func NewV3f(x,y,z float32) Vector3f { return [3]float32{x,y,z} }
+func NewV3d(x,y,z float64) Vector3d { return [3]float64{x,y,z} }
+
+func NewV4f(x,y,z,w float32) Vector4f { return [4]float32{x,y,z,w} }
+func NewV4d(x,y,z,w float64) Vector4d { return [4]float64{x,y,z,w} }
 
