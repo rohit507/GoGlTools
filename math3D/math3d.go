@@ -175,4 +175,90 @@ func (s *Vector4f) CopyInto(d Vector4f) { d[0] = s[0] ; d[1] = s[1] ; d[2] = s[2
 func (d *Vector4d) CopyFrom(s Vector4d) { d[0] = s[0] ; d[1] = s[1] ; d[2] = s[2] ; d[3] = s[3] }
 func (s *Vector4d) CopyInto(d Vector4d) { d[0] = s[0] ; d[1] = s[1] ; d[2] = s[2] ; d[3] = s[3] }
 
+// vector addition of various sorts
 
+func (a *Vector2f) AddToSelf(b Vector2f) { 
+	a[0] += b[0] ; a[1] += b[1] }
+func (a *Vector2f) Add(b Vector2f) Vector2f {
+	return [2]float32{a[0] + b[0], a[1] + b[1] }}
+func AddV2f(a , b Vector2f) Vector2f { 
+	return [2]float32{a[0] + b[0], a[1] + b[1] }}
+
+func (a *Vector2d) AddToSelf(b Vector2d) { 
+	a[0] += b[0] ; a[1] += b[1] }
+func (a *Vector2d) Add(b Vector2d) Vector2d {
+	return [2]float64{a[0] + b[0], a[1] + b[1] }}
+func AddV2d(a , b Vector2d) Vector2d { 
+	return [2]float64{a[0] + b[0], a[1] + b[1] }}
+
+func (a *Vector3f) AddToSelf(b Vector3f) { 
+	a[0] += b[0] ; a[1] += b[1] ; a[2] += b[2] }
+func (a *Vector3f) Add(b Vector3f) Vector3f {
+	return [3]float32{a[0] + b[0], a[1] + b[1] , a[2] + b[2] }}
+func AddV3f(a , b Vector3f) Vector3f { 
+	return [3]float32{a[0] + b[0], a[1] + b[1] , a[2] + b[2] }}
+
+func (a *Vector3d) AddToSelf(b Vector3d) { 
+	a[0] += b[0] ; a[1] += b[1] ; a[2] += b[2] }
+func (a *Vector3d) Add(b Vector3d) Vector3d {
+	return [3]float64{a[0] + b[0], a[1] + b[1] , a[2] + b[2] }}
+func AddV3d(a , b Vector3d) Vector3d { 
+	return [3]float64{a[0] + b[0], a[1] + b[1] , a[2] + b[2] }}
+
+func (a *Vector4f) AddToSelf(b Vector4f) { 
+	a[0] += b[0] ; a[1] += b[1] ; a[2] += b[2] ; a[3] += b[3] }
+func (a *Vector4f) Add(b Vector4f) Vector4f {
+	return [4]float32{a[0] + b[0], a[1] + b[1] , a[2] + b[2] , a[3] + b[3] }}
+func AddV4f(a , b Vector4f) Vector4f { 
+	return [4]float32{a[0] + b[0], a[1] + b[1] , a[2] + b[2] , a[3] + b[3] }}
+
+func (a *Vector4d) AddToSelf(b Vector4d) { 
+	a[0] += b[0] ; a[1] += b[1] ; a[2] += b[2] ; a[3] += b[3] }
+func (a *Vector4d) Add(b Vector4d) Vector4d {
+	return [4]float64{a[0] + b[0], a[1] + b[1] , a[2] + b[2] , a[3] + b[3] }}
+func AddV4d(a , b Vector4d) Vector4d { 
+	return [4]float64{a[0] + b[0], a[1] + b[1] , a[2] + b[2] , a[3] + b[3] }}
+
+// vector subtrantion of various sorts
+
+func (a *Vector2f) SubFromSelf(b Vector2f) { 
+	a[0] -= b[0] ; a[1] -= b[1] }
+func (a *Vector2f) Sub(b Vector2f) Vector2f {
+	return [2]float32{a[0] - b[0], a[1] - b[1] }}
+func SubV2f(a , b Vector2f) Vector2f { 
+	return [2]float32{a[0] - b[0], a[1] - b[1] }}
+
+func (a *Vector2d) SubFromSelf(b Vector2d) { 
+	a[0] -= b[0] ; a[1] -= b[1] }
+func (a *Vector2d) Sub(b Vector2d) Vector2d {
+	return [2]float64{a[0] - b[0], a[1] - b[1] }}
+func SubV2d(a , b Vector2d) Vector2d { 
+	return [2]float64{a[0] - b[0], a[1] - b[1] }}
+
+func (a *Vector3f) SubFromSelf(b Vector3f) { 
+	a[0] -= b[0] ; a[1] -= b[1] ; a[2] -= b[2] }
+func (a *Vector3f) Sub(b Vector3f) Vector3f {
+	return [3]float32{a[0] - b[0], a[1] - b[1] , a[2] - b[2] }}
+func SubV3f(a , b Vector3f) Vector3f { 
+	return [3]float32{a[0] - b[0], a[1] - b[1] , a[2] - b[2] }}
+
+func (a *Vector3d) SubFromSelf(b Vector3d) { 
+	a[0] -= b[0] ; a[1] -= b[1] ; a[2] -= b[2] }
+func (a *Vector3d) Sub(b Vector3d) Vector3d {
+	return [3]float64{a[0] - b[0], a[1] - b[1] , a[2] - b[2] }}
+func SubV3d(a , b Vector3d) Vector3d { 
+	return [3]float64{a[0] - b[0], a[1] - b[1] , a[2] - b[2] }}
+
+func (a *Vector4f) SubFromSelf(b Vector4f) { 
+	a[0] -= b[0] ; a[1] -= b[1] ; a[2] -= b[2] ; a[3] -= b[3] }
+func (a *Vector4f) Sub(b Vector4f) Vector4f {
+	return [4]float32{a[0] - b[0], a[1] - b[1] , a[2] - b[2] , a[3] - b[3] }}
+func SubV4f(a , b Vector4f) Vector4f { 
+	return [4]float32{a[0] - b[0], a[1] - b[1] , a[2] - b[2] , a[3] - b[3] }}
+
+func (a *Vector4d) SubFromSelf(b Vector4d) { 
+	a[0] -= b[0] ; a[1] -= b[1] ; a[2] -= b[2] ; a[3] -= b[3] }
+func (a *Vector4d) Sub(b Vector4d) Vector4d {
+	return [4]float64{a[0] - b[0], a[1] - b[1] , a[2] - b[2] , a[3] - b[3] }}
+func SubV4d(a , b Vector4d) Vector4d { 
+	return [4]float64{a[0] - b[0], a[1] - b[1] , a[2] - b[2] , a[3] - b[3] }}
