@@ -119,6 +119,14 @@ func (m *Matrix44d) SetColumn(v Vector4d, col int) { m[4 * col] = v[0]
 													 m[4 * col + 2] = v[2]
 													 m[4 * col + 3] = v[3] }
 
+func (m *Matrix44f) SetColumn3(v Vector3f, col int) { m[4 * col] = v[0] 
+													 m[4 * col + 1] = v[1]
+													 m[4 * col + 2] = v[2]  }
+
+func (m *Matrix44d) SetColumn3(v Vector3d, col int) { m[4 * col] = v[0] 
+													 m[4 * col + 1] = v[1]
+													 m[4 * col + 2] = v[2] }
+
 // functions to extract the rotation matrices from 4x4matrices
 
 func (m *Matrix44f) ExtractRotationMatrix() Matrix33f {
@@ -145,7 +153,7 @@ func (m *Matrix44d) InjectRotationMatrix(r Matrix33d) {
 
 // matrix multiplication functions. 
 
-func (a *Matrix33f) Multiply(b *Matrix33f) Matrix33f {
+func (a *Matrix33f) Multiply(b Matrix33f) Matrix33f {
 	
 	var ai0 , ai1, ai2 float32
 	var out Matrix33f
@@ -162,7 +170,7 @@ func (a *Matrix33f) Multiply(b *Matrix33f) Matrix33f {
 	return out
 }
 
-func (a *Matrix33d) Multiply(b *Matrix33d) Matrix33d {
+func (a *Matrix33d) Multiply(b Matrix33d) Matrix33d {
 	
 	var ai0 , ai1, ai2 float64
 	var out Matrix33d
@@ -179,7 +187,7 @@ func (a *Matrix33d) Multiply(b *Matrix33d) Matrix33d {
 	return out
 }
 
-func (a *Matrix44f) Multiply(b *Matrix44f) Matrix44f {
+func (a *Matrix44f) Multiply(b Matrix44f) Matrix44f {
 	
 	var ai0 , ai1, ai2 , ai3 float32
 	var out Matrix44f
@@ -198,7 +206,7 @@ func (a *Matrix44f) Multiply(b *Matrix44f) Matrix44f {
 	return out
 }
 
-func (a *Matrix44d) Multiply(b *Matrix44d) Matrix44d {
+func (a *Matrix44d) Multiply(b Matrix44d) Matrix44d {
 	
 	var ai0 , ai1, ai2 , ai3 float64
 	var out Matrix44d
