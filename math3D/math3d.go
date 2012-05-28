@@ -268,6 +268,29 @@ func GetPlaneEquation3f(p1, p2, p3 Vector3f) Vector4f {
 			 -(plane[0] * p3[0] + plane[1] * p3[1] + plane[2] * p3[2])}
 }
 
+func GetPlaneEquation4f(p1, p2, p3 Vector4f) Vector4f {
+    // Get two vectors... do the cross product
+    var v1, v2 Vector3f
+
+    // V1 = p3 - p1
+    v1[0] = p3[0] - p1[0];
+    v1[1] = p3[1] - p1[1];
+    v1[2] = p3[2] - p1[2];
+
+    // V2 = P2 - p1
+    v2[0] = p2[0] - p1[0];
+    v2[1] = p2[1] - p1[1];
+    v2[2] = p2[2] - p1[2];
+
+    // Unit normal to plane - Not sure which is the best way here
+    plane :=  v1.Cross(v2)
+    plane.Normalize()
+
+    // Back substitute to get D
+    return [4]float32{plane[0],plane[1],plane[2],
+			 -(plane[0] * p3[0] + plane[1] * p3[1] + plane[2] * p3[2])}
+}
+
 func GetPlaneEquation3d(p1, p2, p3 Vector3d) Vector4d {
     // Get two vectors... do the cross product
     var v1, v2 Vector3d
