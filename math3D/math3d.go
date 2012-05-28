@@ -69,3 +69,140 @@ func IsPow2 (x uint32) bool {
 	return x == 1
 }
 
+func CloseEnoughf(a,b, epsilon float32) bool {
+	return float32(math.Abs(float64(a - b))) < epsilon
+}
+
+func CloseEnoughd(a,b , epsilon float64) bool {
+	return math.Abs(a - b) < epsilon
+}
+
+// and here are the other utility functions from m3d.cpp
+
+func ProjectXYf(modelView , projection Matrix44f , viewport [4]int, pIn Vector3f) Vector2f {
+
+	var forth, back Vector4f	
+
+	back = [4]float32{pIn[0],pIn[1],pIn[2],1.0}
+
+	forth = back.Transform(modelView)
+	back  = forth.Transform(projection)
+
+	if CloseEnoughf(back[3], 0.0, 0.000001) {
+		div := 1.0 / back[3]
+		back[0] *= div
+		back[1] *= div
+	}
+
+	out := [2]float32{float32(viewport[0])+(1.0+float32(back[0]))*float32(viewport[2])/2.0 ,
+					  float32(viewport[1])+(1.0+float32(back[1]))*float32(viewport[3])/2.0}
+
+	if viewport[0] != 0 {
+		out[0] -= float32(viewport[0])
+	}
+
+	if viewport[1] != 0 {
+		out[1] -= float32(viewport[1])
+	}
+
+	return out
+}
+
+func ProjectXYd(modelView , projection Matrix44d , viewport [4]int, pIn Vector3d) Vector2d {
+
+	var forth, back Vector4d	
+
+	back = [4]float64{pIn[0],pIn[1],pIn[2],1.0}
+
+	forth = back.Transform(modelView)
+	back  = forth.Transform(projection)
+
+	if CloseEnoughd(back[3], 0.0, 0.000001) {
+		div := 1.0 / back[3]
+		back[0] *= div
+		back[1] *= div
+	}
+
+	out := [2]float64{float64(viewport[0])+(1.0+float64(back[0]))*float64(viewport[2])/2.0 ,
+					  float64(viewport[1])+(1.0+float64(back[1]))*float64(viewport[3])/2.0}
+
+	if viewport[0] != 0 {
+		out[0] -= float64(viewport[0])
+	}
+
+	if viewport[1] != 0 {
+		out[1] -= float64(viewport[1])
+	}
+
+	return out
+}
+
+func ProjectXYZf(modelView , projection Matrix44f , viewport [4]int, pIn Vector3f) Vector3f {
+
+	var forth, back Vector4f	
+
+	back = [4]float32{pIn[0],pIn[1],pIn[2],1.0}
+
+	forth = back.Transform(modelView)
+	back  = forth.Transform(projection)
+
+	if CloseEnoughf(back[3], 0.0, 0.000001) {
+		div := 1.0 / back[3]
+		back[0] *= div
+		back[1] *= div
+		back[2] *= div
+	}
+
+	out := [3]float32{float32(viewport[0])+(1.0+float32(back[0]))*float32(viewport[2])/2.0 ,
+					  float32(viewport[1])+(1.0+float32(back[1]))*float32(viewport[3])/2.0 , 0.0}
+
+	if viewport[0] != 0 {
+		out[0] -= float32(viewport[0])
+	}
+
+	if viewport[1] != 0 {
+		out[1] -= float32(viewport[1])
+	}
+
+	out[2] = back[2]
+
+	return out
+}
+
+func ProjectXYZd(modelView , projection Matrix44d , viewport [4]int, pIn Vector3d) Vector3d {
+
+	var forth, back Vector4d
+
+	back = [4]float64{pIn[0],pIn[1],pIn[2],1.0}
+
+	forth = back.Transform(modelView)
+	back  = forth.Transform(projection)
+
+	if CloseEnoughd(back[3], 0.0, 0.000001) {
+		div := 1.0 / back[3]
+		back[0] *= div
+		back[1] *= div
+		back[2] *= div
+	}
+
+	out := [3]float64{float64(viewport[0])+(1.0+float64(back[0]))*float64(viewport[2])/2.0 ,
+					  float64(viewport[1])+(1.0+float64(back[1]))*float64(viewport[3])/2.0 , 0.0}
+
+	if viewport[0] != 0 {
+		out[0] -= float64(viewport[0])
+	}
+
+	if viewport[1] != 0 {
+		out[1] -= float64(viewport[1])
+	}
+
+	out[2] = back[2]
+
+	return out
+}
+
+
+
+
+
+
