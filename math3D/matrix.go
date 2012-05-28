@@ -117,4 +117,29 @@ func (m *Matrix44d) SetColumn(v Vector4d, col int) { m[4 * col] = v[0]
 													 m[4 * col + 2] = v[2]
 													 m[4 * col + 3] = v[3] }
 
+// functions to extract the rotation matrices from 4x4matrices
+
+func (m *Matrix44f) ExtractRotationMatrix() Matrix33f {
+	return [9]float32{m[0],m[1],m[2],m[4],m[5],m[6],m[8],m[9],m[10]}
+}
+
+func (m *Matrix44d) ExtractRotationMatrix() Matrix33d {
+	return [9]float64{m[0],m[1],m[2],m[4],m[5],m[6],m[8],m[9],m[10]}
+}
+
+// functions that inject a rotation matrix into a 4x4 matrix
+
+func (m *Matrix44f) InjectRotationMatrix(r Matrix33f) {
+	m[0] = r[0] ; m[1] = r[1] ; m[2] = r[2]  
+	m[4] = r[3] ; m[5] = r[4] ; m[6] = r[5]
+	m[8] = r[6] ; m[9] = r[7] ; m[10] = r[8]
+}
+
+func (m *Matrix44d) InjectRotationMatrix(r Matrix33d) {
+	m[0] = r[0] ; m[1] = r[1] ; m[2] = r[2]  
+	m[4] = r[3] ; m[5] = r[4] ; m[6] = r[5]
+	m[8] = r[6] ; m[9] = r[7] ; m[10] = r[8]
+}
+
+
 
