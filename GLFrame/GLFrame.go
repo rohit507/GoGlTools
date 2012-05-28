@@ -247,4 +247,19 @@ func (f *Frame) WorldToLocal(world m3d.Vector3f) m3d.Vector3f {
 	return out.Transform(rot)
 
 }
-		
+	
+func (f *Frame) TransformPoint( in m3d.Vector3f) m3d.Vector3f {
+
+	rot := f.GetMatrix(false) 
+
+	return in.Transform(rot)
+
+}
+
+func (f *Frame) RotateVector( in m3d.Vector3f) m3d.Vector3f {
+
+	rot := f.GetMatrix(true)
+
+	return in.Transform(rot)
+
+}	
