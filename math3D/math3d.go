@@ -153,3 +153,26 @@ func NewV3d(x,y,z float64) Vector3d { return [3]float64{x,y,z} }
 func NewV4f(x,y,z,w float32) Vector4f { return [4]float32{x,y,z,w} }
 func NewV4d(x,y,z,w float64) Vector4d { return [4]float64{x,y,z,w} }
 
+// copy funtions for vectors 
+//	chose to do a simple manual copy here since I don't want to
+//	import C and use memcpy like m3d.h
+
+func (d *Vector2f) CopyFrom(s Vector2f) { d[0] = s[0] ; d[1] = s[1] }
+func (s *Vector2f) CopyInto(d Vector2f) { d[0] = s[0] ; d[1] = s[1] }
+
+func (d *Vector2d) CopyFrom(s Vector2d) { d[0] = s[0] ; d[1] = s[1] }
+func (s *Vector2d) CopyInto(d Vector2d) { d[0] = s[0] ; d[1] = s[1] }
+
+func (d *Vector3f) CopyFrom(s Vector3f) { d[0] = s[0] ; d[1] = s[1] ; d[2] = s[2] }
+func (s *Vector3f) CopyInto(d Vector3f) { d[0] = s[0] ; d[1] = s[1] ; d[2] = s[2] }
+
+func (d *Vector3d) CopyFrom(s Vector3d) { d[0] = s[0] ; d[1] = s[1] ; d[2] = s[2] }
+func (s *Vector3d) CopyInto(d Vector3d) { d[0] = s[0] ; d[1] = s[1] ; d[2] = s[2] }
+
+func (d *Vector4f) CopyFrom(s Vector4f) { d[0] = s[0] ; d[1] = s[1] ; d[2] = s[2] ; d[3] = s[3] }
+func (s *Vector4f) CopyInto(d Vector4f) { d[0] = s[0] ; d[1] = s[1] ; d[2] = s[2] ; d[3] = s[3] }
+
+func (d *Vector4d) CopyFrom(s Vector4d) { d[0] = s[0] ; d[1] = s[1] ; d[2] = s[2] ; d[3] = s[3] }
+func (s *Vector4d) CopyInto(d Vector4d) { d[0] = s[0] ; d[1] = s[1] ; d[2] = s[2] ; d[3] = s[3] }
+
+
