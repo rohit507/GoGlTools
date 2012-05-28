@@ -239,4 +239,18 @@ func (a *Vector4d) Scale(b float64) Vector4d {
 func ScaleV4d(a Vector4d, b float64) Vector4d { 
 	return [4]float64{a[0] * b, a[1] * b, a[2] * b, a[3] * b}}
 
+// vector cross products
+
+func (a *Vector3f) Cross(b Vector3f) Vector3f { 
+	return [3]float32{a[1] * b[2] - a[2] * b[1], -a[0]*b[2] + a[2]*b[0], a[0]*b[1] - a[1]*b[2]}
+}
+
+func (a *Vector3d) Cross(b Vector3d) Vector3d{ 
+	return [3]float64{a[1] * b[2] - a[2] * b[1], -a[0]*b[2] + a[2]*b[0], a[0]*b[1] - a[1]*b[2]}
+}
+
+// vector dot products
+
+func (a *Vector3f) Dot(b Vector3f) float32 { return a[0]*b[0] + a[1]*b[1] + a[2]*b[2] }
+func (a *Vector3d) Dot(b Vector3d) float64 { return a[0]*b[0] + a[1]*b[1] + a[2]*b[2] }
 
