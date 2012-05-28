@@ -141,5 +141,78 @@ func (m *Matrix44d) InjectRotationMatrix(r Matrix33d) {
 	m[8] = r[6] ; m[9] = r[7] ; m[10] = r[8]
 }
 
+// matrix multiplication functions. 
+
+func (a *Matrix33f) Multiply(b *Matrix33f) Matrix33f {
+	
+	var ai0 , ai1, ai2 float32
+	var out Matrix33f
+
+	for i := 0 ; i < 3 ; i++ {
+		ai0 = a[i] 
+		ai1 = a[3+i]
+		ai2 = a[6+i]
+   		out[0+i]  = ai0 * b[0] + ai1 * b[1] + ai2 * b[2]
+   		out[3+i]  = ai0 * b[3] + ai1 * b[4] + ai2 * b[5]
+   		out[6+i]  = ai0 * b[6] + ai1 * b[7] + ai2 * b[8]
+	}
+
+	return out
+}
+
+func (a *Matrix33d) Multiply(b *Matrix33d) Matrix33d {
+	
+	var ai0 , ai1, ai2 float64
+	var out Matrix33d
+
+	for i := 0 ; i < 3 ; i++ {
+		ai0 = a[i] 
+		ai1 = a[3+i]
+		ai2 = a[6+i]
+   		out[0+i]  = ai0 * b[0] + ai1 * b[1] + ai2 * b[2]
+   		out[3+i]  = ai0 * b[3] + ai1 * b[4] + ai2 * b[5]
+   		out[6+i]  = ai0 * b[6] + ai1 * b[7] + ai2 * b[8]
+	}
+
+	return out
+}
+
+func (a *Matrix44f) Multiply(b *Matrix44f) Matrix44f {
+	
+	var ai0 , ai1, ai2 , ai3 float32
+	var out Matrix44f
+
+	for i := 0 ; i < 4 ; i++ {
+		ai0 = a[i] 
+		ai1 = a[4+i]
+		ai2 = a[8+i]
+		ai3 = a[12+i]
+   		out[0+i]  = ai0 * b[0] + ai1 * b[1] + ai2 * b[2] + ai3 * b[3]
+   		out[4+i]  = ai0 * b[4] + ai1 * b[5] + ai2 * b[6] + ai3 * b[7]
+   		out[8+i]  = ai0 * b[8] + ai1 * b[9] + ai2 * b[10] + ai3 * b[11]
+   		out[12+i] = ai0 * b[12] + ai1 * b[13] + ai2 * b[14] + ai3 * b[15]
+	}
+
+	return out
+}
+
+func (a *Matrix44d) Multiply(b *Matrix44d) Matrix44d {
+	
+	var ai0 , ai1, ai2 , ai3 float64
+	var out Matrix44d
+
+	for i := 0 ; i < 4 ; i++ {
+		ai0 = a[i] 
+		ai1 = a[4+i]
+		ai2 = a[8+i]
+		ai3 = a[12+i]
+   		out[0+i]  = ai0 * b[0] + ai1 * b[1] + ai2 * b[2] + ai3 * b[3]
+   		out[4+i]  = ai0 * b[4] + ai1 * b[5] + ai2 * b[6] + ai3 * b[7]
+   		out[8+i]  = ai0 * b[8] + ai1 * b[9] + ai2 * b[10] + ai3 * b[11]
+   		out[12+i] = ai0 * b[12] + ai1 * b[13] + ai2 * b[14] + ai3 * b[15]
+	}
+
+	return out
+}
 
 
