@@ -120,4 +120,15 @@ func (v *Vector4d) SetY(i float64) { v[1] = i }
 func (v *Vector4d) SetZ(i float64) { v[2] = i }
 func (v *Vector4d) SetW(i float64) { v[3] = i }
 
+// inline functions to load values into vectors
+
+func (v *Vector2f) Load(x,y float32) { v[0] = x; v[1] = y }
+func (v *Vector2d) Load(x,y float64) { v[0] = x; v[1] = y }
+
+func (v *Vector3f) Load(x,y,z float32) { v[0] = x; v[1] = y; v[2] = z }
+func (v *Vector3d) Load(x,y,z float64) { v[0] = x; v[1] = y; v[2] = z }
+
+func (v *Vector4f) Load(x,y,z,w float32) { v[0] = x; v[1] = y; v[2] = z; v[3] = w }
+func (v *Vector4d) Load(x,y,z,w float64) { v[0] = x; v[1] = y; v[2] = z; v[3] = w }
+
 
