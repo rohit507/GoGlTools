@@ -144,3 +144,22 @@ func (f *Frustum) Transform(cam glfrm.Frame) {
 	f.leftPlane = m3d.GetPlaneEquation4f(f.nearLLT,f.nearULT,f.farULT)
 	f.rightPlane = m3d.GetPlaneEquation4f(f.nearLRT,f.farLRT,f.farURT)
 }
+
+func (f *Frustum) TestSphereL(x , y , z , rad float32) bool {
+	return f.TestSphereV([3]float32{x,y,z} , rad)
+}
+
+func (f *Frustum) TestSphereV(point m3d.Vector3f  , radius float32) bool {
+	var d float32
+	
+	planes := [6]m3d.Vector4f{f.nearPlane,f.farPlane,f.leftPlane,f.rightPlane,f.topPlane,f.bottomPlane} 
+
+	for i := 0 ; i < 6 ; i++ {
+		d = m3d.DistanceToPlanef(point,planes[i])
+		if (d + radius) >= 0 {
+			return false
+		}
+	}
+	
+	return true
+}

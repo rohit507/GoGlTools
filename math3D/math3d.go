@@ -574,3 +574,12 @@ func ClosestPointOnRay3d(vRayOrigin, vUnitRayDir, vPointInSpace Vector3d) (Vecto
 	
 	return vPointOnRay , vPointOnRay.SquaredDistanceTo(vPointInSpace)
 }
+
+//Calculates the signed distance of a point to a plane
+
+func DistanceToPlanef( point Vector3f , plane Vector4f) float32 {
+	return point[0]*plane[0] + point[1]*plane[1] + point[2]*plane[2] + plane[3]; }
+                
+
+func DistanceToPlaned( point Vector3d , plane Vector4d) float64 {
+                	return point[0]*plane[0] + point[1]*plane[1] + point[2]*plane[2] + plane[3]; }
