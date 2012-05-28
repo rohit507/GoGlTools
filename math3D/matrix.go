@@ -215,4 +215,36 @@ func (a *Matrix44d) Multiply(b *Matrix44d) Matrix44d {
 	return out
 }
 
+// lets you transform a vector by a particular matrix
 
+func (v *Vector4f) Transform(m Matrix44f) Vector4f {
+	return [4]float32{ m[0] * v[0] + m[4] * v[1] + m[8] *  v[2] + m[12] * v[3],	 
+    				   m[1] * v[0] + m[5] * v[1] + m[9] *  v[2] + m[13] * v[3],	
+   					   m[2] * v[0] + m[6] * v[1] + m[10] * v[2] + m[14] * v[3],	
+					   m[3] * v[0] + m[7] * v[1] + m[11] * v[2] + m[15] * v[3]}}
+
+func (v *Vector4d) Transform(m Matrix44d) Vector4d {
+	return [4]float64{ m[0] * v[0] + m[4] * v[1] + m[8] *  v[2] + m[12] * v[3],	 
+    				   m[1] * v[0] + m[5] * v[1] + m[9] *  v[2] + m[13] * v[3],	
+   					   m[2] * v[0] + m[6] * v[1] + m[10] * v[2] + m[14] * v[3],	
+					   m[3] * v[0] + m[7] * v[1] + m[11] * v[2] + m[15] * v[3]}}
+
+func (v *Vector3f) Transform(m Matrix44f) Vector3f {
+	return [3]float32{ m[0] * v[0] + m[4] * v[1] + m[8]  *  v[2] + m[12],	 
+    				   m[1] * v[0] + m[5] * v[1] + m[9]  *  v[2] + m[13],	
+   					   m[2] * v[0] + m[6] * v[1] + m[10] *  v[2] + m[14]}}	
+
+func (v *Vector3d) Transform(m Matrix44d) Vector3d {
+	return [3]float64{ m[0] * v[0] + m[4] * v[1] + m[8]  *  v[2] + m[12],	 
+    				   m[1] * v[0] + m[5] * v[1] + m[9]  *  v[2] + m[13],	
+   					   m[2] * v[0] + m[6] * v[1] + m[10] *  v[2] + m[14]}}	
+
+func (p *Vector3f) Rotate(m Matrix33f) Vector3f {
+	return [3]float32{ m[0] * p[0] + m[3] * p[1] + m[6] * p[2],
+   					   m[1] * p[0] + m[4] * p[1] + m[7] * p[2],	
+    				   m[2] * p[0] + m[5] * p[1] + m[8] * p[2]}}	
+
+func (p *Vector3d) Rotate(m Matrix33d) Vector3d {
+	return [3]float64{ m[0] * p[0] + m[3] * p[1] + m[6] * p[2],
+   					   m[1] * p[0] + m[4] * p[1] + m[7] * p[2],	
+    				   m[2] * p[0] + m[5] * p[1] + m[8] * p[2]}}	
