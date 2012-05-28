@@ -58,3 +58,66 @@ func HrToRad(x float32)  float32 { return x * (1.0 / 15.0) * PiOver180 }
 func DegToHr(x float32)  float32 { return x * 15.0 }
 func RadtoHr(x float32)  float32 { return x * 15 * InvPiOver180 }
 
+// here are the inline functions  from m3d.h
+
+func IsPow2 (x uint32) bool {
+
+	for x > 1 {
+		x <<= 1
+	}
+
+	return x == 1
+}
+
+	//yay OOifying things :P
+	// also code duplication beyond belief
+
+func (v *Vector2f) X() float32 { return v[0] }
+func (v *Vector2f) Y() float32 { return v[1] }
+
+func (v *Vector2f) SetX(i float32) { v[0] = i }
+func (v *Vector2f) SetY(i float32) { v[1] = i }
+
+func (v *Vector2d) X() float64 { return v[0] }
+func (v *Vector2d) Y() float64 { return v[1] }
+
+func (v *Vector2d) SetX(i float64) { v[0] = i }
+func (v *Vector2d) SetY(i float64) { v[1] = i }
+
+func (v *Vector3f) X() float32 { return v[0] }
+func (v *Vector3f) Y() float32 { return v[1] }
+func (v *Vector3f) Z() float32 { return v[2] }
+
+func (v *Vector3f) SetX(i float32) { v[0] = i }
+func (v *Vector3f) SetY(i float32) { v[1] = i }
+func (v *Vector3f) SetZ(i float32) { v[2] = i }
+
+func (v *Vector3d) X() float64 { return v[0] }
+func (v *Vector3d) Y() float64 { return v[1] }
+func (v *Vector3d) Z() float64 { return v[2] }
+
+func (v *Vector3d) SetX(i float64) { v[0] = i }
+func (v *Vector3d) SetY(i float64) { v[1] = i }
+func (v *Vector3d) SetZ(i float64) { v[2] = i }
+
+func (v *Vector4f) X() float32 { return v[0] }
+func (v *Vector4f) Y() float32 { return v[1] }
+func (v *Vector4f) Z() float32 { return v[2] }
+func (v *Vector4f) W() float32 { return v[3] }
+
+func (v *Vector4f) SetX(i float32) { v[0] = i }
+func (v *Vector4f) SetY(i float32) { v[1] = i }
+func (v *Vector4f) SetZ(i float32) { v[2] = i }
+func (v *Vector4f) SetW(i float32) { v[3] = i }
+
+func (v *Vector4d) X() float64 { return v[0] }
+func (v *Vector4d) Y() float64 { return v[1] }
+func (v *Vector4d) Z() float64 { return v[2] }
+func (v *Vector4d) W() float64 { return v[3] }
+
+func (v *Vector4d) SetX(i float64) { v[0] = i }
+func (v *Vector4d) SetY(i float64) { v[1] = i }
+func (v *Vector4d) SetZ(i float64) { v[2] = i }
+func (v *Vector4d) SetW(i float64) { v[3] = i }
+
+
