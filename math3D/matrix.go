@@ -338,3 +338,266 @@ func OrthographicMatrix44d(xmin ,xmax ,ymin ,ymax, zmin, zmax float64) Matrix44d
 						-((ymax + ymin)/(ymax - ymin)),
 						-((zmax + zmin)/(zmax - zmin)), 1.0}}
 
+// makes a rotation matrix
+
+func RotationMatrix33f( angle, x, y, z float32) Matrix33f {
+
+	s := float32(math.Sin(float64(angle)))
+	c := float32(math.Cos(float64(angle)))
+	mag := float32(math.Sqrt(float64( x*x + y*y + z*z )))
+
+	// Identity matrix
+	if mag == 0.0 {
+		return IdentityMatrix33f() 
+	}
+
+	// Rotation matrix is normalized
+	x /= mag
+	y /= mag
+	z /= mag
+
+	xx := x * x
+	yy := y * y
+	zz := z * z
+	xy := x * y 
+	yz := y * z
+	zx := z * x
+	xs := x * s
+	ys := y * s
+	zs := z * s
+	onec := 1.0 - c
+
+	return [9]float32{ (onec * xx) + c ,(onec * xy) - zs,(onec * zx) + ys,
+					   (onec * xy) + zs,(onec * yy) + c ,(onec * yz) - xs,
+					   (onec * zx) - ys,(onec * yz) + xs,(onec * zz) + c }
+}
+
+func RotationMatrix33d( angle, x, y, z float64) Matrix33d {
+
+	s := math.Sin(angle)
+	c := math.Cos(angle)
+	mag := math.Sqrt( x*x + y*y + z*z )
+
+	// Identity matrix
+	if mag == 0.0 {
+		return IdentityMatrix33d() 
+	}
+
+	// Rotation matrix is normalized
+	x /= mag
+	y /= mag
+	z /= mag
+
+	xx := x * x
+	yy := y * y
+	zz := z * z
+	xy := x * y
+	yz := y * z
+	zx := z * x
+	xs := x * s
+	ys := y * s
+	zs := z * s
+	onec := 1.0 - c
+
+	return [9]float64{ (onec * xx) + c ,(onec * xy) - zs,(onec * zx) + ys,
+					   (onec * xy) + zs,(onec * yy) + c ,(onec * yz) - xs,
+					   (onec * zx) - ys,(onec * yz) + xs,(onec * zz) + c }
+}
+
+func RotationMatrix44f(angle, x, y, z float32) Matrix44f {
+
+	s := float32(math.Sin(float64(angle)))
+	c := float32(math.Cos(float64(angle)))
+	mag := float32(math.Sqrt(float64( x*x + y*y + z*z )))
+
+	// Identity matrix
+	if mag == 0.0 {
+		return IdentityMatrix44f() 
+	}
+
+	// Rotation matrix is normalized
+	x /= mag
+	y /= mag
+	z /= mag
+
+	xx := x * x
+	yy := y * y
+	zz := z * z
+	xy := x * y 
+	yz := y * z
+	zx := z * x
+	xs := x * s
+	ys := y * s
+	zs := z * s
+	onec := 1.0 - c
+
+	return [16]float32{ (onec * xx) + c ,(onec * xy) - zs,(onec * zx) + ys, 0.0 ,
+					    (onec * xy) + zs,(onec * yy) + c ,(onec * yz) - xs, 0.0 ,
+					    (onec * zx) - ys,(onec * yz) + xs,(onec * zz) + c , 0.0 ,
+						0.0 , 0.0 , 0.0 , 0.0 }
+}
+
+func RotationMatrix44d(angle, x, y, z float64) Matrix44d {
+
+	s := math.Sin(angle)
+	c := math.Cos(angle)
+	mag := math.Sqrt( x*x + y*y + z*z )
+
+	// Identity matrix
+	if mag == 0.0 {
+		return IdentityMatrix44d() 
+	}
+
+	// Rotation matrix is normalized
+	x /= mag
+	y /= mag
+	z /= mag
+
+	xx := x * x
+	yy := y * y
+	zz := z * z
+	xy := x * y 
+	yz := y * z
+	zx := z * x
+	xs := x * s
+	ys := y * s
+	zs := z * s
+	onec := 1.0 - c
+
+	return [16]float64{ (onec * xx) + c ,(onec * xy) - zs,(onec * zx) + ys, 0.0 ,
+					    (onec * xy) + zs,(onec * yy) + c ,(onec * yz) - xs, 0.0 ,
+					    (onec * zx) - ys,(onec * yz) + xs,(onec * zz) + c , 0.0 ,
+						0.0 , 0.0 , 0.0 , 0.0 }
+}
+
+// translation matrices this time
+
+func TranslationMatrix44f( x, y, z float32) Matrix44f { 
+	return [16]float32{ 1.0 , 0.0 , 0.0 , 0.0 ,
+						0.0 , 1.0 , 0.0 , 0.0 ,
+						0.0 , 0.0 , 1.0 , 0.0 ,
+						 x  ,  y  ,  z  , 0.0 }}
+
+func TranslationMatrix44d( x, y, z float64) Matrix44d { 
+	return [16]float64{ 1.0 , 0.0 , 0.0 , 0.0 ,
+						0.0 , 1.0 , 0.0 , 0.0 ,
+						0.0 , 0.0 , 1.0 , 0.0 ,
+						 x  ,  y  ,  z  , 0.0 }}
+
+// we want to invert matrices but in order to do that
+//	we need to be able to calculate their derirminants
+//	but we don't want others to do it, so we'll make them private
+
+func (m *Matrix44f) detIJ(i , j int) float32 {
+    var mat [3][3]float32
+	x := 0
+    for ii := 0; ii < 4; ii++ {
+        if ii == i {
+       	 	y := 0
+        	for jj := 0; jj < 4; jj++ {
+            	if jj == j {
+            		mat[x][y] = m[(ii*4)+jj]
+            		y++
+				}
+			}
+        	x++
+        }
+	}
+
+    ret := mat[0][0]*(mat[1][1]*mat[2][2]-mat[2][1]*mat[1][2])
+    ret -= mat[0][1]*(mat[1][0]*mat[2][2]-mat[2][0]*mat[1][2])
+    ret += mat[0][2]*(mat[1][0]*mat[2][1]-mat[2][0]*mat[1][1])
+
+    return ret
+}
+
+func (m *Matrix44d) detIJ(i , j int) float64 {
+    var mat [3][3]float64
+	x := 0
+    for ii := 0; ii < 4; ii++ {
+        if ii == i {
+       	 	y := 0
+        	for jj := 0; jj < 4; jj++ {
+            	if jj == j {
+            		mat[x][y] = m[(ii*4)+jj]
+            		y++
+				}
+			}
+        	x++
+        }
+	}
+
+    ret := mat[0][0]*(mat[1][1]*mat[2][2]-mat[2][1]*mat[1][2])
+    ret -= mat[0][1]*(mat[1][0]*mat[2][2]-mat[2][0]*mat[1][2])
+    ret += mat[0][2]*(mat[1][0]*mat[2][1]-mat[2][0]*mat[1][1])
+
+    return ret
+}
+
+// and now for the thing to invert a matrix
+
+func (m *Matrix44f) Inverse() Matrix44f {
+
+	var det float32 
+	var inv Matrix44f
+
+    // calculate 4x4 determinant
+    det = 0.0
+
+    for i := 0; i < 4; i++ {
+        if (i & 0x1) != 0 {
+			det += (-m[i] * m.detIJ(0,i)) 
+		} else {
+			det += (m[i] * m.detIJ(0,i))
+		}
+    }
+
+    det = 1.0 / det
+
+    // calculate inverse
+    for i := 0; i < 4; i++ {
+        for j := 0; j < 4; j++ {
+            detij := m.detIJ(j, i)
+			if ((i + j) & 0x1) != 0 {
+				inv[i*4 + j] = -detij * det
+			} else {
+				inv[i*4 + j] = detij * det
+			}
+		}
+	}
+   
+	return inv
+}
+
+func (m *Matrix44d) Inverse() Matrix44d {
+
+	var det float64
+	var inv Matrix44d
+
+    // calculate 4x4 determinant
+    det = 0.0
+
+    for i := 0; i < 4; i++ {
+        if (i & 0x1) != 0 {
+			det += (-m[i] * m.detIJ(0,i)) 
+		} else {
+			det += (m[i] * m.detIJ(0,i))
+		}
+    }
+
+    det = 1.0 / det
+
+    // calculate inverse
+    for i := 0; i < 4; i++ {
+        for j := 0; j < 4; j++ {
+            detij := m.detIJ(j, i)
+			if ((i + j) & 0x1) != 0 {
+				inv[i*4 + j] = -detij * det
+			} else {
+				inv[i*4 + j] = detij * det
+			}
+		}
+	}
+   
+	return inv
+}
