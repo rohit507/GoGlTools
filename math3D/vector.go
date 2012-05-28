@@ -285,3 +285,12 @@ func (v *Vector3f) GetUnitVector() Vector3f { return v.Scale( 1.0 / v.Length()) 
 func (v *Vector3d) Normalize() { v.ScaleSelf( 1.0 / v.Length()) }
 func (v *Vector3d) GetUnitVector() Vector3d { return v.Scale( 1.0 / v.Length()) }
 
+// function to get the distance between two points
+
+func (v *Vector3f) SquaredDistanceTo(u Vector3f) float32 { t := v.Sub(u) ; return t.SquaredLength() }
+func (v *Vector3f) DistanceTo(u Vector3f) float32 { t := v.Sub(u) ; return t.Length() }
+
+func (v *Vector3d) SquaredDistanceTo(u Vector3d) float64 { t := v.Sub(u) ; return t.SquaredLength() }
+func (v *Vector3d) DistanceTo(u Vector3d) float64 { t := v.Sub(u) ; return t.Length() }
+
+
