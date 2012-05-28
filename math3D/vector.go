@@ -1,6 +1,10 @@
 
 package math3D
 
+import ( 
+	"math"
+)
+
 	//yay OOifying things :P
 	// also code duplication beyond belief
 
@@ -253,4 +257,31 @@ func (a *Vector3d) Cross(b Vector3d) Vector3d{
 
 func (a *Vector3f) Dot(b Vector3f) float32 { return a[0]*b[0] + a[1]*b[1] + a[2]*b[2] }
 func (a *Vector3d) Dot(b Vector3d) float64 { return a[0]*b[0] + a[1]*b[1] + a[2]*b[2] }
+
+// get the angle between vectors
+
+func (a *Vector3f) AngleBetween(b Vector3f) float32 {return float32(math.Acos(float64(a.Dot(b)))) }
+func (a *Vector3d) AngleBetween(b Vector3d) float64 {return math.Acos(a.Dot(b)) }
+
+// get magnitude and squared magnitude (pop pop!) 
+//	the function duplication is there because I don't yet trust
+//	the compiler to perform the optimizations it really should
+
+func (a *Vector3f) SquaredMagnitude() float32 { return a[0]*a[0] + a[1]*a[1] + a[2]*a[2] }
+func (a *Vector3f) Magnitude() float32 { return float32(math.Sqrt(float64(a.SquaredMagnitude()))) }
+func (a *Vector3f) SquaredLength() float32 { return a[0]*a[0] + a[1]*a[1] + a[2]*a[2] }
+func (a *Vector3f) Length() float32 { return float32(math.Sqrt(float64(a.SquaredLength()))) }
+	
+func (a *Vector3d) SquaredMagnitude() float64 { return a[0]*a[0] + a[1]*a[1] + a[2]*a[2] }
+func (a *Vector3d) Magnitude() float64 { return math.Sqrt(a.SquaredMagnitude()) }
+func (a *Vector3d) SquaredLength() float64 { return a[0]*a[0] + a[1]*a[1] + a[2]*a[2] }
+func (a *Vector3d) Length() float64 { return math.Sqrt(a.SquaredLength()) }
+
+// functions to normalize / selfnormalize a vector
+
+func (v *Vector3f) Normalize() { v.ScaleSelf( 1.0 / v.Length()) }
+func (v *Vector3f) GetUnitVector() Vector3f { return v.Scale( 1.0 / v.Length()) }
+
+func (v *Vector3d) Normalize() { v.ScaleSelf( 1.0 / v.Length()) }
+func (v *Vector3d) GetUnitVector() Vector3d { return v.Scale( 1.0 / v.Length()) }
 
