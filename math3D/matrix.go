@@ -1,6 +1,8 @@
 
 package math3D
 
+import "math"
+
 // all the matrix functions I can get from math.3d
 //	the original version used memcpy and i'd like 
 //	to avoid that, plus I don't know if gc does loop
@@ -61,20 +63,20 @@ func (d *Matrix44d) CopyFrom(s Matrix44d) {
 
 // get identity matrices of various sorts
 
-func Identity33f() Matrix33f { return [9]float32{1.0,0.0,0.0, // this is stil in column major
+func IdentityMatrix33f() Matrix33f { return [9]float32{1.0,0.0,0.0, // this is stil in column major
 												 0.0,1.0,0.0,
 												 0.0,0.0,1.0}}
 
-func Identity33d() Matrix33d { return [9]float64{1.0,0.0,0.0, // this is stil in column major
+func IdentityMatrix33d() Matrix33d { return [9]float64{1.0,0.0,0.0, // this is stil in column major
 												 0.0,1.0,0.0,
 												 0.0,0.0,1.0}}
 
-func Identity44f() Matrix44f { return [16]float32{1.0,0.0,0.0,0.0, // this is stil in column major
+func IdentityMatrix44f() Matrix44f { return [16]float32{1.0,0.0,0.0,0.0, // this is stil in column major
 												  0.0,1.0,0.0,0.0,
 												  0.0,0.0,1.0,0.0,
 												  0.0,0.0,0.0,1.0}}
 
-func Identity44d() Matrix44d { return [16]float64{1.0,0.0,0.0,0.0, // this is stil in column major
+func IdentityMatrix44d() Matrix44d { return [16]float64{1.0,0.0,0.0,0.0, // this is stil in column major
 												  0.0,1.0,0.0,0.0,
 												  0.0,0.0,1.0,0.0,
 												  0.0,0.0,0.0,1.0}}
@@ -247,4 +249,92 @@ func (p *Vector3f) Rotate(m Matrix33f) Vector3f {
 func (p *Vector3d) Rotate(m Matrix33d) Vector3d {
 	return [3]float64{ m[0] * p[0] + m[3] * p[1] + m[6] * p[2],
    					   m[1] * p[0] + m[4] * p[1] + m[7] * p[2],	
-    				   m[2] * p[0] + m[5] * p[1] + m[8] * p[2]}}	
+    				   m[2] * p[0] + m[5] * p[1] + m[8] * p[2]}}
+
+//generate scaling matrices
+
+func ScaleMatrix33f(v Vector3f) Matrix33f {
+	return [9]float32{ v[0], 0.0 , 0.0,
+					   0.0 , v[1], 0.0,
+					   0.0 , 0.0 , v[2]}}
+
+func ScaleMatrix33d(v Vector3d) Matrix33d {
+	return [9]float64{ v[0], 0.0 , 0.0,
+					   0.0 , v[1], 0.0,
+					   0.0 , 0.0 , v[2]}}
+
+func ScaleMatrix44f(v Vector3f) Matrix44f {
+	return [16]float32{ v[0], 0.0 , 0.0, 0.0,
+					   0.0 , v[1], 0.0, 0.0,
+					   0.0 , 0.0 ,v[2], 0.0,
+					   0.0 , 0.0 , 0.0, 1.0}}
+
+func ScaleMatrix44d(v Vector3d) Matrix44d {
+	return [16]float64{ v[0], 0.0 , 0.0, 0.0,
+					   0.0 , v[1], 0.0, 0.0,
+					   0.0 , 0.0 ,v[2], 0.0,
+					   0.0 , 0.0 , 0.0, 1.0}}
+
+// create a projection matrix
+
+func PerspectiveMatrix44f(fov, aspect, zmin, zmax float32) Matrix44f {
+
+	out := IdentityMatrix44f()
+
+    ymax := zmin * float32(math.Tan(float64(fov * 0.5)))
+	ymin := -ymax
+	xmin := ymin * aspect
+	xmax := -xmin
+
+	out[0] = (2.0 * zmin) / (xmax - xmin)
+	out[5] = (2.0 * zmin) / (ymax - ymin)
+	out[8] = (xmax + xmin) / (xmax - xmin)
+	out[9] = (ymax + ymin) / (ymax - ymin)
+	out[10] = -((zmax + zmin) / (zmax - zmin))
+	out[11] = -1.0
+	out[14] = -((2.0 * (zmax*zmin))/(zmax - zmin))
+	out[15] = 0.0
+
+	return out
+}
+
+func PerspectiveMatrix44d(fov, aspect, zmin, zmax float64) Matrix44d {
+
+	out := IdentityMatrix44d()
+
+    ymax := zmin * math.Tan(fov * 0.5)
+	ymin := -ymax
+	xmin := ymin * aspect
+	xmax := -xmin
+
+	out[0] = (2.0 * zmin) / (xmax - xmin)
+	out[5] = (2.0 * zmin) / (ymax - ymin)
+	out[8] = (xmax + xmin) / (xmax - xmin)
+	out[9] = (ymax + ymin) / (ymax - ymin)
+	out[10] = -((zmax + zmin) / (zmax - zmin))
+	out[11] = -1.0
+	out[14] = -((2.0 * (zmax*zmin))/(zmax - zmin))
+	out[15] = 0.0
+
+	return out
+}
+
+// make an orthographic projection matrix
+
+func OrthographicMatrix44f(xmin ,xmax ,ymin ,ymax, zmin, zmax float32) Matrix44f {
+	return [16]float32{ 2.0  / (xmax - xmin) , 0.0 , 0.0 , 0.0,
+						0.0 , 2.0  / (ymax - ymin) , 0.0 , 0.0,
+					    0.0 , 0.0 ,-2.0  / (xmax - xmin) , 0.0,
+						-((xmax + xmin)/(xmax - xmin)),
+						-((ymax + ymin)/(ymax - ymin)),
+						-((zmax + zmin)/(zmax - zmin)), 1.0}}
+
+
+func OrthographicMatrix44d(xmin ,xmax ,ymin ,ymax, zmin, zmax float64) Matrix44d {
+	return [16]float64{ 2.0  / (xmax - xmin) , 0.0 , 0.0 , 0.0,
+						0.0 , 2.0  / (ymax - ymin) , 0.0 , 0.0,
+					    0.0 , 0.0 ,-2.0  / (xmax - xmin) , 0.0,
+						-((xmax + xmin)/(xmax - xmin)),
+						-((ymax + ymin)/(ymax - ymin)),
+						-((zmax + zmin)/(zmax - zmin)), 1.0}}
+
